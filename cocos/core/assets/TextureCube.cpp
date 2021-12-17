@@ -74,27 +74,26 @@ void TextureCube::setMipmaps(const std::vector<ITextureCubeMipmap> &value) {
     _mipmaps = value;
     setMipmapLevel(_mipmaps.size());
     if (!_mipmaps.empty()) {
-        ImageAsset *imageAsset = _mipmaps[0].front;
-        reset({
-            .width       = imageAsset->getWidth(),
-            .height      = imageAsset->getHeight(),
-            .format      = imageAsset->getFormat(),
-            .mipmapLevel = static_cast<uint32_t>(_mipmaps.size()),
-        });
+        ImageAsset *         imageAsset = _mipmaps[0].front;
+        ITexture2DCreateInfo info;
+        info.width       = imageAsset->getWidth();
+        info.height      = imageAsset->getHeight();
+        info.format      = imageAsset->getFormat();
+        info.mipmapLevel = static_cast<uint32_t>(_mipmaps.size());
+        reset(info);
 
         for (size_t level = 0, len = _mipmaps.size(); level < len; ++level) {
             forEachFace(_mipmaps[level], [this, level](ImageAsset *face, TextureCube::FaceIndex faceIndex) {
                 assignImage(face, level, static_cast<uint32_t>(faceIndex));
             });
-            ;
         }
 
     } else {
-        reset({
-            .width       = 0,
-            .height      = 0,
-            .mipmapLevel = static_cast<uint32_t>(_mipmaps.size()),
-        });
+        ITexture2DCreateInfo info;
+        info.width       = 0;
+        info.height      = 0;
+        info.mipmapLevel = static_cast<uint32_t>(_mipmaps.size());
+        reset(info);
     }
 }
 
@@ -176,15 +175,13 @@ void TextureCube::deserialize(const cc::any &serializedData, const cc::any &hand
     _mipmaps.resize(data->mipmaps.size());
     for (size_t i = 0; i < data->mipmaps.size(); ++i) {
         // Prevent resource load failed
-        _mipmaps[i] = {
-            .front  = new ImageAsset(),
-            .back   = new ImageAsset(),
-            .left   = new ImageAsset(),
-            .right  = new ImageAsset(),
-            .top    = new ImageAsset(),
-            .bottom = new ImageAsset(),
-        };
-        //        auto* mipmap = data->mipmaps[i];
+        ITextureCubeMipmap &cubInfo = _mipmaps[i];
+        cubInfo.front               = new ImageAsset();
+        cubInfo.back                = new ImageAsset();
+        cubInfo.left                = new ImageAsset();
+        cubInfo.right               = new ImageAsset();
+        cubInfo.top                 = new ImageAsset();
+        cubInfo.bottom              = new ImageAsset();
 
         //cjh TODO: what's handle.result??        const imageAssetClassId = js._getClassId(ImageAsset);
         //

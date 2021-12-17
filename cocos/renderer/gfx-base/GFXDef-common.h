@@ -1042,6 +1042,16 @@ struct ShaderStage {
 using ShaderStageList = vector<ShaderStage>;
 
 struct Attribute {
+    Attribute() = default;
+
+    Attribute(String name, Format format, bool isNormalized = false, uint stream = 0, bool isInstanced = false, uint location = 0) {
+        this->name   = name;
+        this->format = format;
+        this->isNormalized = isNormalized;
+        this->stream       = stream;
+        this->isInstanced  = isInstanced;
+        this->location     = location;
+    }
     String name;
     Format format       = Format::UNKNOWN;
     bool   isNormalized = false;
@@ -1094,6 +1104,7 @@ struct InputAssemblerInfo {
 };
 
 struct ColorAttachment {
+public:
     Format                  format      = Format::UNKNOWN;
     SampleCount             sampleCount = SampleCount::X1;
     LoadOp                  loadOp      = LoadOp::CLEAR;

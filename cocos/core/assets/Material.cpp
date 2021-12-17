@@ -403,9 +403,9 @@ void Material::bindTexture(scene::Pass *pass, uint32_t handle, const MaterialPro
 void Material::initDefault(const cc::optional<std::string> &uuid) {
     Super::initDefault(uuid);
     MacroRecord   defines{{"USE_COLOR", true}};
-    IMaterialInfo info{
-        .effectName = "unlit",
-        .defines    = defines};
+    IMaterialInfo info;
+    info.effectName = "unlit";
+    info.defines    = defines;
     initialize(info);
     setProperty("mainColor", Color{0xFF, 0x00, 0xFF, 0xFF});
 }

@@ -85,15 +85,16 @@ IGeometry torus(float radius, float tube, const cc::optional<ITorusOptions> &opt
         }
     }
 
-    return IGeometry{
-        .positions      = positions,
-        .normals        = normals,
-        .uvs            = uvs,
-        .boundingRadius = boundingRadius,
-        .minPos         = minPos,
-        .maxPos         = maxPos,
-        .indices        = indices,
-    };
+    IGeometry geometryInfo;
+    geometryInfo.positions      = positions;
+    geometryInfo.normals        = normals;
+    geometryInfo.uvs            = uvs;
+    geometryInfo.boundingRadius = boundingRadius;
+    geometryInfo.minPos         = minPos;
+    geometryInfo.maxPos         = maxPos;
+    geometryInfo.indices        = indices;
+
+    return geometryInfo;
 }
 
 } // namespace cc

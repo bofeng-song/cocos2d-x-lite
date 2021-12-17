@@ -189,10 +189,10 @@ void RenderingSubMesh::enableVertexIdChannel(gfx::Device *device) {
     _iaInfo.attributes    = _attributes;
     _iaInfo.vertexBuffers = _vertexBuffers.get();
 
-    _vertexIdChannel = VertexIdChannel{
-        .stream = streamIndex,
-        .index  = attributeIndex,
-    };
+    VertexIdChannel channelInfo;
+    channelInfo.stream = streamIndex;
+    channelInfo.index  = attributeIndex;
+    _vertexIdChannel   = channelInfo;
 }
 
 bool RenderingSubMesh::destroy() {

@@ -37,14 +37,16 @@ uint64_t getDefaultSamlerHash() {
     return defaultSamplerHash;
 }
 
-cc::gfx::ColorAttachment colorAttachment{
-    .endAccesses = std::vector<cc::gfx::AccessType>{cc::gfx::AccessType::FRAGMENT_SHADER_READ_TEXTURE}};
+cc::gfx::ColorAttachment  colorAttachment{cc::gfx::Format::UNKNOWN,
+                                          cc::gfx::SampleCount::X1,
+                                          cc::gfx::LoadOp::CLEAR,
+                                          cc::gfx::StoreOp::STORE,
+                                          {},
+                                          std::vector<cc::gfx::AccessType>{cc::gfx::AccessType::FRAGMENT_SHADER_READ_TEXTURE}};
+
 cc::gfx::RenderPassInfo passInfo{std::vector<cc::gfx::ColorAttachment>{colorAttachment}, cc::gfx::DepthStencilAttachment{}};
 
-cc::scene::IRenderWindowInfo windowInfo{
-    .width          = 1,
-    .height         = 1,
-    .renderPassInfo = passInfo};
+cc::scene::IRenderWindowInfo windowInfo{CC_NULLOPT, 1, 1, passInfo, CC_NULLOPT, CC_NULLOPT};
 } // namespace
 namespace cc {
 

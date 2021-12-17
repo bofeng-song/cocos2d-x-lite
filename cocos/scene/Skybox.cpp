@@ -124,12 +124,12 @@ void Skybox::activate() {
     if (skyboxMaterial == nullptr) {
         auto *        mat = new Material();
         MacroRecord   defines{{"USE_RGBE_CUBEMAP", _isRGBE}};
-        IMaterialInfo matInfo{
-            .effectName = "skybox",
-            .defines    = defines};
+        IMaterialInfo matInfo;
+        matInfo.effectName = "skybox",
+        matInfo.defines    = defines;
         mat->initialize({matInfo});
-        IMaterialInstanceInfo matInstInfo{
-            .parent = mat};
+        IMaterialInstanceInfo matInstInfo;
+        matInstInfo.parent = mat;
         skyboxMaterial = new MaterialInstance(matInstInfo);
     } else {
         MacroRecord defines{{"USE_RGBE_CUBEMAP", _isRGBE}};
@@ -138,7 +138,11 @@ void Skybox::activate() {
 
     if (_enabled) {
         if (skyboxMesh == nullptr) {
-            skyboxMesh = createMesh(createGeometry(PrimitiveType::BOX, IBoxOptions({.width = 2, .height = 2, .length = 2})), skyboxMesh);
+            IBoxOptions options;
+            options.width = 2;
+            options.height = 2;
+            options.length = 2;
+            skyboxMesh     = createMesh(createGeometry(PrimitiveType::BOX, PrimitiveOptions(options)), skyboxMesh);
             _model->initSubModel(0, skyboxMesh->getRenderingSubMeshes()[0], skyboxMaterial);
         }
     }

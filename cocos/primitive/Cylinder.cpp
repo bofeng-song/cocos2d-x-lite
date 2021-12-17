@@ -252,15 +252,15 @@ IGeometry cylinder(float radiusTop, float radiusBottom, float height, const cc::
         }
     }
 
-    return IGeometry{
-        .positions      = positions,
-        .normals        = normals,
-        .uvs            = uvs,
-        .boundingRadius = boundingRadius,
-        .minPos         = minPos,
-        .maxPos         = maxPos,
-        .indices        = indices,
-    };
+    IGeometry geometryInfo;
+    geometryInfo.positions      = positions;
+    geometryInfo.normals        = normals;
+    geometryInfo.uvs            = uvs;
+    geometryInfo.boundingRadius = boundingRadius;
+    geometryInfo.minPos         = minPos;
+    geometryInfo.maxPos         = maxPos;
+    geometryInfo.indices        = indices;
+    return geometryInfo;
 }
 
 } // namespace cc

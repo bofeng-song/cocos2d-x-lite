@@ -79,13 +79,13 @@ ITextureBufferHandle TextureBufferPool::alloc(uint32_t size) {
     if (start >= 0) {
         auto chunk = _chunks[index];
         chunk.start += static_cast<index_t>(size);
-        ITextureBufferHandle handle{
-            .chunkIdx = index,
-            .start    = start,
-            .end      = static_cast<index_t>(start + size),
-            .texture  = chunk.texture};
 
-        _handles.emplace_back(handle);
+        _handles.emplace_back();
+        auto &handle = _handles.back();
+        handle.chunkIdx = index;
+        handle.start    = start;
+        handle.end      = static_cast<index_t>(start + size);
+        handle.texture  = chunk.texture;
         return handle;
     }
     // create a new one
@@ -94,13 +94,13 @@ ITextureBufferHandle TextureBufferPool::alloc(uint32_t size) {
     auto     newChunk   = _chunks[createChunk(texLength)];
 
     newChunk.start += static_cast<index_t>(size);
-    ITextureBufferHandle texHandle{
-        .chunkIdx = static_cast<index_t>(_chunkCount - 1),
-        .start    = 0,
-        .end      = static_cast<index_t>(size),
-        .texture  = newChunk.texture};
-    _handles.emplace_back(texHandle);
-    return texHandle;
+    _handles.emplace_back();
+    auto &handle    = _handles.back();
+    handle.chunkIdx = static_cast<index_t>(_chunkCount - 1);
+    handle.start    = 0;
+    handle.end      = static_cast<index_t>(size);
+    handle.texture  = newChunk.texture;
+    return handle;
 }
 
 ITextureBufferHandle TextureBufferPool::alloc(uint32_t size, index_t chunkIdx) {
@@ -119,13 +119,12 @@ ITextureBufferHandle TextureBufferPool::alloc(uint32_t size, index_t chunkIdx) {
     if (start >= 0) {
         auto chunk = _chunks[index];
         chunk.start += static_cast<index_t>(size);
-        ITextureBufferHandle handle{
-            .chunkIdx = index,
-            .start    = start,
-            .end      = static_cast<index_t>(start + size),
-            .texture  = chunk.texture};
-
-        _handles.emplace_back(handle);
+        _handles.emplace_back();
+        auto &handle    = _handles.back();
+        handle.chunkIdx = index;
+        handle.start    = start;
+        handle.end      = static_cast<index_t>(start + size);
+        handle.texture  = chunk.texture;
         return handle;
     }
     // create a new one
@@ -134,13 +133,13 @@ ITextureBufferHandle TextureBufferPool::alloc(uint32_t size, index_t chunkIdx) {
     auto     newChunk   = _chunks[createChunk(texLength)];
 
     newChunk.start += static_cast<index_t>(size);
-    ITextureBufferHandle texHandle{
-        .chunkIdx = static_cast<index_t>(_chunkCount - 1),
-        .start    = 0,
-        .end      = static_cast<index_t>(size),
-        .texture  = newChunk.texture};
-    _handles.emplace_back(texHandle);
-    return texHandle;
+    _handles.emplace_back();
+    auto &handle    = _handles.back();
+    handle.chunkIdx = static_cast<index_t>(_chunkCount - 1);
+    handle.start    = 0;
+    handle.end      = static_cast<index_t>(size);
+    handle.texture  = newChunk.texture;
+    return handle;
 }
 
 void TextureBufferPool::free(const ITextureBufferHandle &handle) {
@@ -160,13 +159,13 @@ uint32_t TextureBufferPool::createChunk(uint32_t length) {
                                             length,
                                             length, gfx::TextureFlagBit::IMMUTABLE});
 
-    ITextureBuffer chunk{
-        .texture = texture,
-        .size    = texSize,
-        .start   = 0,
-        .end     = static_cast<index_t>(texSize)};
-    _chunks[_chunkCount] = chunk;
-    return _chunkCount++;
+    _chunks.emplace_back();
+    auto &chunk   = _chunks.back();
+    chunk.texture = texture;
+    chunk.size    = texSize;
+    chunk.start   = 0;
+    chunk.end     = static_cast<index_t>(texSize);
+    return _chunks.size();
 }
 
 void TextureBufferPool::update(const ITextureBufferHandle &handle, ArrayBuffer *buffer) {
@@ -284,13 +283,12 @@ ITextureBufferHandle TextureBufferPool::mcDonaldAlloc(uint32_t size) {
         }
         if (isFound) {
             chunk.start += static_cast<index_t>(size);
-
-            ITextureBufferHandle handle{
-                .chunkIdx = i,
-                .start    = start,
-                .end      = static_cast<index_t>(size),
-                .texture  = chunk.texture};
-            _handles.emplace_back(handle);
+            _handles.emplace_back();
+            auto &handle    = _handles.back();
+            handle.chunkIdx = i;
+            handle.start    = start;
+            handle.end      = static_cast<index_t>(size);
+            handle.texture  = chunk.texture;
             return handle;
         }
     }
@@ -300,13 +298,15 @@ ITextureBufferHandle TextureBufferPool::mcDonaldAlloc(uint32_t size) {
     auto     newChunk   = _chunks[createChunk(texLength)];
 
     newChunk.start += static_cast<index_t>(size);
-    ITextureBufferHandle texHandle{
-        .chunkIdx = static_cast<index_t>(_chunkCount),
-        .start    = 0,
-        .end      = static_cast<index_t>(size),
-        .texture  = newChunk.texture};
-    _handles.emplace_back(texHandle);
-    return texHandle;
+    _handles.emplace_back();
+    auto &handle = _handles.back();
+
+    handle.chunkIdx = static_cast<index_t>(_chunkCount);
+    handle.start    = 0;
+    handle.end      = static_cast<index_t>(size);
+    handle.texture  = newChunk.texture;
+
+    return handle;
 }
 
 } // namespace cc
