@@ -255,10 +255,7 @@ std::vector<cc::event::IListenerMask> searchComponentsInParent(cc::Node *node) {
     for (cc::Node *curr = node; curr != nullptr && cc::Node::isNode(curr); curr = curr->getParent(), ++index) {
         auto *comp = curr->getComponent<T>();
         if (comp != nullptr) {
-            cc::event::IListenerMask next{
-                .index = index,
-                .comp  = comp,
-            };
+            cc::event::IListenerMask next{index, comp};
             list.emplace_back(next);
         }
     }

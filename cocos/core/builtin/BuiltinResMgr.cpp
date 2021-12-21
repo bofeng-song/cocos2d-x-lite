@@ -173,7 +173,8 @@ bool BuiltinResMgr::initBuiltinRes(gfx::Device *device) {
     }
     //
     const ShaderSource *shaderSources = nullptr;
-    if (const auto iter = ShaderSourceAssembly::get().find(shaderVersionKey); iter != ShaderSourceAssembly::get().cend()) {
+    const auto          iter          = ShaderSourceAssembly::get().find(shaderVersionKey);
+    if (iter != ShaderSourceAssembly::get().cend()) {
         shaderSources = iter->second;
     }
 

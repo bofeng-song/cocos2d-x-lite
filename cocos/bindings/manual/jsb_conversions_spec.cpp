@@ -42,13 +42,31 @@
 
 ///////////////////////// utils /////////////////////////
 
-template <class... Ts>
-struct overloaded : Ts... { using Ts::operator()...; }; // NOLINT
-template <class... Ts>
-overloaded(Ts...) -> overloaded<Ts...>;
+template <class... Fs>
+struct overload;
+
+template <class F0, class... Frest>
+struct overload<F0, Frest...> : F0, overload<Frest...> {
+    overload(F0 f0, Frest... rest) : F0(f0), overload<Frest...>(rest...) {}
+
+    using F0::                operator();
+    using overload<Frest...>::operator();
+};
+
+template <class F0>
+struct overload<F0> : F0 {
+    overload(F0 f0) : F0(f0) {}
+
+    using F0::operator();
+};
+
+template <class... Fs>
+auto make_overload(Fs... fs) {
+    return overload<Fs...>(fs...);
+}
 
 template <typename A, typename T, typename F>
-bool set_member_field(se::Object *obj, T *to, const std::string_view &property, F f, se::Value &tmp) { // NOLINT
+bool set_member_field(se::Object *obj, T *to, const std::string &property, F f, se::Value &tmp) { // NOLINT
     bool ok = obj->getProperty(property.data(), &tmp, true);
     SE_PRECONDITION2(ok, false, "Property '%s' is not set", property.data());
     if constexpr (std::is_member_function_pointer<F>::value) {
@@ -1116,11 +1134,12 @@ bool sevalue_to_native(const se::Value &from, cc::TypedArray *to, se::Object * /
         }
     }
 
-    cc::visit(overloaded{[&](auto &typedArray) {
-                             typedArray.setJSTypedArray(from.toObject());
-                         },
-                         [](cc::monostate /*unused*/) {}},
-              *to);
+    CC_VISIT(make_overload(
+                 [&](auto &typedArray) {
+                     typedArray.setJSTypedArray(from.toObject());
+                 },
+                 [](cc::monostate /*unused*/) {}),
+             *to);
     return true;
 }
 

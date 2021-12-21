@@ -51,9 +51,8 @@ bool approx(F a, F b, F maxDiff) {
  * @param max
  */
 
-template <typename F>
-auto clamp(F val, F min, F max) {
-    static_assert(std::is_floating_point<F>::value, "number expected");
+template <typename F> typename std::enable_if<std::is_arithmetic<F>::value,  F>::type 
+clamp(F val, F min, F max) {  
     if (min > max) {
         const auto temp = min;
         min             = max;

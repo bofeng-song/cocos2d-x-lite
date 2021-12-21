@@ -307,7 +307,7 @@ public:
     template <typename T>
     inline void setPrivateData(T *data) {
         static_assert(!std::is_void<T>::value, "void * is not allowed for private data");
-        setPrivateObject(se::make_shared_private_object(data));
+        setPrivateObject(se::make_shared_private_object<T>(data));
     }
 
     template <typename T>

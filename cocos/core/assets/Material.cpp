@@ -272,8 +272,8 @@ void Material::update(bool keepProps /* = true*/) {
                     props = _props[pass->getPropertyIndex()];
                 }
 
-                for (const auto &[key, value] : props) {
-                    uploadProperty(pass, key, value);
+                for (const auto &prop : props) {
+                    uploadProperty(pass, prop.first, prop.second);
                 }
             };
 

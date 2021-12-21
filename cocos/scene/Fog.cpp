@@ -122,7 +122,8 @@ void Fog::updatePipeline() {
     const FogType value    = _enabled ? _type : FogType::NONE;
     auto *        pipeline = root->getPipeline();
 
-    if (auto iter = pipeline->getMacros().find("CC_USE_FOG"); iter != pipeline->getMacros().end()) {
+    auto iter = pipeline->getMacros().find("CC_USE_FOG");
+    if (iter != pipeline->getMacros().end()) {
         const MacroValue &macro    = iter->second;
         const int32_t *   macroPtr = cc::get_if<int32_t>(&macro);
         if (macroPtr != nullptr && *macroPtr == static_cast<int32_t>(value)) {

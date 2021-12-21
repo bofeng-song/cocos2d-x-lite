@@ -31,7 +31,7 @@
 
 namespace cc {
 
-template <typename Index, typename Enable = std::enable_if_t<std::is_integral_v<Index>>>
+template <typename Index, typename Enable = std::enable_if_t<std::is_integral<Index>::value>>
 class IndexHandle {
 public:
     struct Hasher {

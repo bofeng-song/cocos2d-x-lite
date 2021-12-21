@@ -155,7 +155,8 @@ void Skybox::updatePipeline() const {
     Root *                    root     = Root::getInstance();
     pipeline::RenderPipeline *pipeline = root->getPipeline();
 
-    if (auto iter = pipeline->getMacros().find("CC_USE_IBL"); iter != pipeline->getMacros().end()) {
+    auto iter = pipeline->getMacros().find("CC_USE_IBL");
+    if (iter != pipeline->getMacros().end()) {
         const MacroValue &macro    = iter->second;
         const int32_t *   macroPtr = cc::get_if<int32_t>(&macro);
         if (macroPtr != nullptr && (*macroPtr == value)) {

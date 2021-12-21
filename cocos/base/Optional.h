@@ -55,12 +55,13 @@ public:
     template <class U>
     optional(optional<U> const& rhs,
              typename boost::enable_if<boost::optional_detail::is_optional_constructible<T, U const&>, bool>::type = true) {
-        boost::optional<U>(rhs);
+       // boost::optional<U>(rhs);
+        this->emplace_assign(rhs);
     }
 
-    template <typename U, typename = std::enable_if_t<std::is_assignable<T&, U>::value> >
+    template <typename U, typename = boost::enable_if_t<boost::optional_detail::is_optional_constructible<T&, U>::value> >
     optional(const optional<U>& val) {
-        boost::optional<U>(val);
+        this->emplace_assign(val);
     }
 };
 

@@ -81,19 +81,20 @@ const IGeometricInfo &RenderingSubMesh::geometricInfo() {
     auto index = static_cast<index_t>(_subMeshIdx.value());
 
     const auto &positionsVar = _mesh->readAttribute(index, gfx::ATTR_NAME_POSITION);
-    if (const auto *pPositions = cc::get_if<Float32Array>(&positionsVar); pPositions != nullptr) {
+    const auto *pPositions   = CC_GET_IF<Float32Array>(&positionsVar);
+    if (pPositions != nullptr) {
         const auto &positions  = *pPositions;
         const auto &indicesVar = _mesh->readIndices(index);
-        if (const auto *pIndices = cc::get_if<Uint16Array>(&indicesVar); pIndices != nullptr) {
+        const auto *pIndices   = CC_GET_IF<Uint16Array>(&indicesVar);
+        if (pIndices != nullptr) {
             const auto &indices = *pIndices;
 
             Vec3 max;
             Vec3 min;
-
-            if (auto iter = std::find_if(_attributes.cbegin(), _attributes.cend(), [](const gfx::Attribute &element) -> bool {
-                    return element.name == gfx::ATTR_NAME_POSITION;
-                });
-                iter != _attributes.cend()) {
+            auto iter = std::find_if(_attributes.cbegin(), _attributes.cend(), [](const gfx::Attribute &element) -> bool {
+                return element.name == gfx::ATTR_NAME_POSITION;
+            });
+            if (iter != _attributes.cend()) {
                 const auto &   attri = *iter;
                 const uint32_t count = gfx::GFX_FORMAT_INFOS[static_cast<uint32_t>(attri.format)].count;
                 if (count == 2) {

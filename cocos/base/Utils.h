@@ -82,8 +82,8 @@ uint toUint(T value) {
 
 template <typename Map>
 Map &mergeToMap(Map &outMap, const Map &inMap) {
-    for (const auto &[k, v] : inMap) {
-        outMap.emplace(k, v);
+    for (const auto &in : inMap) {
+        outMap.emplace(in.first, in.second);
     }
     return outMap;
 }

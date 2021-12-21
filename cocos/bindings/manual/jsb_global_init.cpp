@@ -103,7 +103,7 @@ void jsb_init_file_operation_delegate() { //NOLINT
 
                 size_t   dataLen = 0;
                 uint8_t *data    = xxtea_decrypt(fileData.getBytes(), static_cast<uint32_t>(fileData.getSize()),
-                                              reinterpret_cast<unsigned char *>(xxteaKey.data()),
+                                              reinterpret_cast<unsigned char *>(const_cast<char*>(xxteaKey.data())),
                                               static_cast<uint32_t>(xxteaKey.size()), reinterpret_cast<uint32_t *>(&dataLen));
 
                 if (data == nullptr) {
@@ -144,7 +144,7 @@ void jsb_init_file_operation_delegate() { //NOLINT
 
                 uint32_t dataLen;
                 uint8_t *data = xxtea_decrypt(static_cast<uint8_t *>(fileData.getBytes()), static_cast<uint32_t>(fileData.getSize()),
-                                              reinterpret_cast<unsigned char *>(xxteaKey.data()),
+                                              reinterpret_cast<unsigned char *>(const_cast<char*>(xxteaKey.data())),
                                               static_cast<uint32_t>(xxteaKey.size()), &dataLen);
 
                 if (data == nullptr) {
