@@ -46,7 +46,7 @@ cc::gfx::ColorAttachment  colorAttachment{cc::gfx::Format::UNKNOWN,
 
 cc::gfx::RenderPassInfo passInfo{std::vector<cc::gfx::ColorAttachment>{colorAttachment}, cc::gfx::DepthStencilAttachment{}};
 
-cc::scene::IRenderWindowInfo windowInfo{CC_NULLOPT, 1, 1, passInfo, CC_NULLOPT, CC_NULLOPT};
+cc::scene::IRenderWindowInfo windowInfo{cc::nullopt, 1, 1, passInfo, cc::nullopt, cc::nullopt};
 } // namespace
 namespace cc {
 

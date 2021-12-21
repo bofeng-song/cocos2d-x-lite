@@ -105,7 +105,7 @@ std::vector<IMacroInfo> prepareDefines(const MacroRecord &records, const std::ve
         auto        value = mapDefine(tmp, it == records.end() ? cc::nullopt : cc::optional<MacroValue>(it->second));
         //TODO(PatriceJiang): v === '0' can be bool ?
         
-        bool isDefault = it == records.end() || (CC_HOLDS_ALTERNATIVE<std::string>(it->second) && CC_GET<std::string>(it->second) == "0");
+        bool isDefault = it == records.end() || (cc::holds_alternative<std::string>(it->second) && cc::get<std::string>(it->second) == "0");
         macros.emplace_back();
         auto &info     = macros.back();
         info.name      = name;

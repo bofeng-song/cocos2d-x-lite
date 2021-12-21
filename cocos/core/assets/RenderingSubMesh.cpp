@@ -81,11 +81,11 @@ const IGeometricInfo &RenderingSubMesh::geometricInfo() {
     auto index = static_cast<index_t>(_subMeshIdx.value());
 
     const auto &positionsVar = _mesh->readAttribute(index, gfx::ATTR_NAME_POSITION);
-    const auto *pPositions   = CC_GET_IF<Float32Array>(&positionsVar);
+    const auto *pPositions   = cc::get_if<Float32Array>(&positionsVar);
     if (pPositions != nullptr) {
         const auto &positions  = *pPositions;
         const auto &indicesVar = _mesh->readIndices(index);
-        const auto *pIndices   = CC_GET_IF<Uint16Array>(&indicesVar);
+        const auto *pIndices   = cc::get_if<Uint16Array>(&indicesVar);
         if (pIndices != nullptr) {
             const auto &indices = *pIndices;
 

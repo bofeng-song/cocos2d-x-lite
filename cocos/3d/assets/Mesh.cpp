@@ -174,7 +174,7 @@ cc::any Mesh::getNativeAsset() const {
 }
 
 void Mesh::setNativeAsset(const cc::any &obj) {
-    auto p = CC_ANY_CAST<ArrayBuffer *>(obj);
+    auto p = cc::any_cast<ArrayBuffer *>(obj);
     if (p != nullptr) {
         _data = Uint8Array(p);
     }

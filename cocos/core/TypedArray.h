@@ -303,7 +303,7 @@ template <typename T>
 T getTypedArrayValue(const TypedArray &arr, index_t idx) {
 #define TYPEDARRAY_GET_VALUE(type)            \
     {                                         \
-        auto *p = CC_GET_IF<type>(&arr);      \
+        auto *p = cc::get_if<type>(&arr);      \
         if (p != nullptr) {                   \
             return static_cast<T>((*p)[idx]); \
         }                                     \
@@ -328,7 +328,7 @@ template <typename T>
 T &getTypedArrayValueRef(const TypedArray &arr, index_t idx) {
 #define TYPEDARRAY_GET_VALUE_REF(type)   \
     {                                    \
-        auto *p = CC_GET_IF<type>(&arr); \
+        auto *p = cc::get_if<type>(&arr); \
         if (p != nullptr) {              \
             return (*p)[idx];            \
         }                                \
@@ -349,7 +349,7 @@ template <typename T>
 T getTypedArrayElementValue(const TypedArrayElementType &element) {
 #define CAST_TO_T(type)                      \
     {                                        \
-        auto *p = CC_GET_IF<type>(&element); \
+        auto *p = cc::get_if<type>(&element); \
         if (p != nullptr) {                  \
             return static_cast<T>(*p);       \
         }                                    \

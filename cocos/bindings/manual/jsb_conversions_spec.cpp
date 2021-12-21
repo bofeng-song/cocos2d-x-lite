@@ -1134,7 +1134,7 @@ bool sevalue_to_native(const se::Value &from, cc::TypedArray *to, se::Object * /
         }
     }
 
-    CC_VISIT(make_overload(
+    cc::visit(make_overload(
                  [&](auto &typedArray) {
                      typedArray.setJSTypedArray(from.toObject());
                  },

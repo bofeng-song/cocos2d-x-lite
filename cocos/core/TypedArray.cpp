@@ -30,7 +30,7 @@ namespace cc {
 uint32_t getTypedArrayLength(const TypedArray &arr) {
 #define TYPEDARRAY_GET_SIZE(type)        \
     {                                    \
-        auto *p = CC_GET_IF<type>(&arr); \
+        auto *p = cc::get_if<type>(&arr); \
         if (p != nullptr) {              \
             return p->length();          \
         }                                \
@@ -52,7 +52,7 @@ uint32_t getTypedArrayLength(const TypedArray &arr) {
 uint32_t getTypedArrayBytesPerElement(const TypedArray &arr) {
 #define TYPEDARRAY_GET_BYTES_PER_ELEMENT(type) \
     {                                          \
-        auto *p = CC_GET_IF<type>(&arr);       \
+        auto *p = cc::get_if<type>(&arr);       \
         if (p != nullptr) {                    \
             return type::BYTES_PER_ELEMENT;    \
         }                                      \
@@ -71,41 +71,41 @@ uint32_t getTypedArrayBytesPerElement(const TypedArray &arr) {
     return 0;
 }
 
-void setTypedArrayValue(TypedArray &arr, index_t idx, const TypedArrayElementType &value) {
+void setTypedArrayValue(TypedArray &arr, uint32_t idx, const TypedArrayElementType &value) {
 #define TYPEDARRAY_SET_VALUE(type, elemType)                               \
     {                                                                      \
-        auto *p = CC_GET_IF<elemType>(&value);                             \
+        auto *p = cc::get_if<elemType>(&value);                             \
         if (p != nullptr) {                                                \
-            if (CC_HOLDS_ALTERNATIVE<Float32Array>(arr)) {                 \
-                CC_GET<Float32Array>(arr)[idx] = static_cast<float>(*p);   \
+            if (cc::holds_alternative<Float32Array>(arr)) {                 \
+                cc::get<Float32Array>(arr)[idx] = static_cast<float>(*p);   \
                 return;                                                    \
             }                                                              \
-            if (CC_HOLDS_ALTERNATIVE<Uint16Array>(arr)) {                  \
-                CC_GET<Uint16Array>(arr)[idx] = static_cast<uint16_t>(*p); \
+            if (cc::holds_alternative<Uint16Array>(arr)) {                  \
+                cc::get<Uint16Array>(arr)[idx] = static_cast<uint16_t>(*p); \
                 return;                                                    \
             }                                                              \
-            if (CC_HOLDS_ALTERNATIVE<Uint32Array>(arr)) {                  \
-                CC_GET<Uint32Array>(arr)[idx] = static_cast<uint32_t>(*p); \
+            if (cc::holds_alternative<Uint32Array>(arr)) {                  \
+                cc::get<Uint32Array>(arr)[idx] = static_cast<uint32_t>(*p); \
                 return;                                                    \
             }                                                              \
-            if (CC_HOLDS_ALTERNATIVE<Uint8Array>(arr)) {                   \
-                CC_GET<Uint8Array>(arr)[idx] = static_cast<uint8_t>(*p);   \
+            if (cc::holds_alternative<Uint8Array>(arr)) {                   \
+                cc::get<Uint8Array>(arr)[idx] = static_cast<uint8_t>(*p);   \
                 return;                                                    \
             }                                                              \
-            if (CC_HOLDS_ALTERNATIVE<Int32Array>(arr)) {                   \
-                CC_GET<Int32Array>(arr)[idx] = static_cast<int32_t>(*p);   \
+            if (cc::holds_alternative<Int32Array>(arr)) {                   \
+                cc::get<Int32Array>(arr)[idx] = static_cast<int32_t>(*p);   \
                 return;                                                    \
             }                                                              \
-            if (CC_HOLDS_ALTERNATIVE<Int16Array>(arr)) {                   \
-                CC_GET<Int16Array>(arr)[idx] = static_cast<int16_t>(*p);   \
+            if (cc::holds_alternative<Int16Array>(arr)) {                   \
+                cc::get<Int16Array>(arr)[idx] = static_cast<int16_t>(*p);   \
                 return;                                                    \
             }                                                              \
-            if (CC_HOLDS_ALTERNATIVE<Int8Array>(arr)) {                    \
-                CC_GET<Int8Array>(arr)[idx] = static_cast<int8_t>(*p);     \
+            if (cc::holds_alternative<Int8Array>(arr)) {                    \
+                cc::get<Int8Array>(arr)[idx] = static_cast<int8_t>(*p);     \
                 return;                                                    \
             }                                                              \
-            if (CC_HOLDS_ALTERNATIVE<Float64Array>(arr)) {                 \
-                CC_GET<Float64Array>(arr)[idx] = static_cast<double>(*p);  \
+            if (cc::holds_alternative<Float64Array>(arr)) {                 \
+                cc::get<Float64Array>(arr)[idx] = static_cast<double>(*p);  \
                 return;                                                    \
             }                                                              \
         }                                                                  \

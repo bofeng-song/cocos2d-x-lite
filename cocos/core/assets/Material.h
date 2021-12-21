@@ -320,7 +320,7 @@ protected:
 
     template <typename T1, typename T2>
     void prepareInfo(const T1 &patch, std::vector<T2> &cur) {
-        auto *pOneElement = CC_GET_IF<T2>(&patch);
+        auto *pOneElement = cc::get_if<T2>(&patch);
         if (pOneElement != nullptr) {
             size_t len = _effectAsset != nullptr ? _effectAsset->_techniques[_techIdx].passes.size() : 1;
 
@@ -336,7 +336,7 @@ protected:
                 cur[i] = patchArray[i];
             }
         } else {
-            auto *pPatchArray = CC_GET_IF<std::vector<T2>>(&patch);
+            auto *pPatchArray = cc::get_if<std::vector<T2>>(&patch);
             if (pPatchArray != nullptr) {
                 const auto &patchArray = *pPatchArray;
                 size_t      len        = patchArray.size();

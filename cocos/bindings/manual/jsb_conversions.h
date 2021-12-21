@@ -1438,7 +1438,7 @@ inline bool nativevalue_to_se(T &&from, se::Value &to) { // NOLINT(readability-i
 template <typename... ARGS>
 bool nativevalue_to_se(const cc::variant<ARGS...> &from, se::Value &to, se::Object *ctx) { // NOLINT(readability-identifier-naming)
     bool ok = false;
-    CC_VISIT([&](auto parama) {
+    cc::visit([&](auto parama) {
         ok = nativevalue_to_se(parama, to, ctx);
     }, from);
     return ok;
