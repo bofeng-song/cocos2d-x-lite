@@ -27,42 +27,17 @@
 
 #ifdef USE_CXX_17
 
-    #include <optional>
-
+    #include <shared_mutex>
 namespace cc {
-
-template <class T>
-using optional = std::optional<T>;
-
-using nullopt_t = std::nullopt_t;
-inline constexpr nullopt_t nullopt{nullopt_t::__secret_tag{}, nullopt_t::__secret_tag{}};
-
 }; // namespace cc
 #else
-    #include <string>
-    #include "boost/none.hpp"
-    #include "boost/optional.hpp"
+    #include "boost/thread/shared_mutex.hpp"
+    #include "boost/thread/lock_types.hpp"
 
 namespace cc {
+using shared_mutex = boost::shared_mutex;
 
-template <typename T>
-class optional : public boost::optional<T> {
-public:
-    using boost::optional<T>::optional;
-    using boost::optional<T>::operator=;
-
-    optional() = default;
-
-    optional(const char* str) {
-        optional<std::string> tmp = (std::string)str;
-        optional((optional<std::string>)tmp);
-    }
-};
-
-using nullopt_t = boost::none_t;
-
-const nullopt_t nullopt((boost::none_t::init_tag()));
-
+template <class T>
+using shared_lock = boost::shared_lock<T>;
 }; // namespace cc
-
 #endif

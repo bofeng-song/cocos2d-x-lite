@@ -355,7 +355,7 @@ void LightingStage::render(scene::Camera *camera) {
                              camera->getClearDepth(), camera->getClearStencil());
 
     uint const globalOffsets[] = {_pipeline->getPipelineUBO()->getCurrentCameraUBOOffset()};
-    cmdBuff->bindDescriptorSet(globalSet, pipeline->getDescriptorSet(), static_cast<uint>(std::size(globalOffsets)), globalOffsets);
+    cmdBuff->bindDescriptorSet(globalSet, pipeline->getDescriptorSet(), static_cast<uint>(sizeof(globalOffsets)/sizeof(uint)), globalOffsets);
     // get pso and draw quad
     scene::Pass *pass   = sceneData->getDeferredLightPass();
     gfx::Shader *shader = sceneData->getDeferredLightPassShader();

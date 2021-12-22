@@ -296,7 +296,7 @@ float raySubMesh(const Ray & /*ray*/, const RenderingSubMesh & /*submesh*/, IRay
     deOpt.distance = FLT_MAX;
     deOpt.doubleSided = false;
 
-    auto               minDis = 0;
+    float minDis = 0;
 
     minDis = 0;
 

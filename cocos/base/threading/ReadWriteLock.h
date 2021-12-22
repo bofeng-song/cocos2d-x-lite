@@ -25,7 +25,7 @@
 
 #pragma once
 
-#include <shared_mutex>
+#include "cocos/base/SharedMutex.h"
 
 namespace cc {
 
@@ -40,18 +40,18 @@ public:
     auto lockWrite(Function &&func, Args &&...args) noexcept -> decltype(func(std::forward<Args>(args)...));
 
 private:
-    std::shared_mutex _mutex;
+    cc::shared_mutex _mutex;
 };
 
 template <typename Function, typename... Args>
 auto ReadWriteLock::lockRead(Function &&func, Args &&...args) noexcept -> decltype(func(std::forward<Args>(args)...)) {
-    std::shared_lock<std::shared_mutex> lock(_mutex);
+    cc::shared_lock<cc::shared_mutex> lock(_mutex);
     return func(std::forward<Args>(args)...);
 }
 
 template <typename Function, typename... Args>
 auto ReadWriteLock::lockWrite(Function &&func, Args &&...args) noexcept -> decltype(func(std::forward<Args>(args)...)) {
-    std::lock_guard<std::shared_mutex> lock(_mutex);
+    std::lock_guard<cc::shared_mutex> lock(_mutex);
     return func(std::forward<Args>(args)...);
 }
 

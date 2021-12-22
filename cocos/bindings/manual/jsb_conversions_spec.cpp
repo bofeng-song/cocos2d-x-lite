@@ -81,7 +81,7 @@ bool set_member_field(se::Object *obj, T *to, const std::string &property, F f, 
         SE_PRECONDITION2(ok, false, "Convert property '%s' failed", property.data());
         return true;
     }
-    static_assert(std::is_member_pointer_v<F>, "only member pointer allowed!");
+    static_assert(std::is_member_pointer<F>::value, "only member pointer allowed!");
 
     return false;
 }

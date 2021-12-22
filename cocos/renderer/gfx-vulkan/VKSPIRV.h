@@ -74,7 +74,7 @@ inline glslang::EShTargetLanguageVersion getTargetVersion(int vulkanMinorVersion
     }
 }
 
-inline bool glslangInitialized = false;
+bool glslangInitialized = false;
 
 inline vector<unsigned int> glsl2spirv(ShaderStageFlagBit type, const String &source, int vulkanMinorVersion = 0) {
     if (!glslangInitialized) {

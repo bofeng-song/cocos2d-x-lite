@@ -1076,11 +1076,6 @@ void for_each_tuple_internal(T &&tuple, F &&consumer, size_t argsize) {
     std::initializer_list<int>{(consumer(std::get<S>(tuple)), 0)...};
 }
 
-template <typename T, T... S, typename F>
-constexpr void se_for_each(std::integer_sequence<T, S...> index, F &&f) { // NOLINT
-   // (static_cast<void>(f(std::integral_constant<T, S>{})), ...);
-}
-
 template <typename... Args>
 bool sevalue_to_native(const se::Value &from, std::tuple<Args...> *to, se::Object *ctx) { // NOLINT
     constexpr size_t argsize = std::tuple_size<std::tuple<Args...>>::value;
@@ -1192,12 +1187,6 @@ template <typename T>
 inline typename std::enable_if<is_jsb_object_v<T>, bool>::type
 nativevalue_to_se(const T &from, se::Value &to, se::Object *ctx) {
     return native_ptr_to_seval(from, &to);
-}
-
-template <typename T>
-inline typename std::enable_if<!std::is_enum<T>::value && !std::is_pointer<T>::value && !is_jsb_object_v<T>, bool>::type
-nativevalue_to_se(const T &from, se::Value &to, se::Object *ctx) {
-    return nativevalue_to_se(from, to, ctx);
 }
 
 #endif // HAS_CONSTEXPR

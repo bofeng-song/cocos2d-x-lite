@@ -298,6 +298,7 @@ cocos_source_files(
     cocos/base/RefCounted.h
     cocos/base/Scheduler.cpp
     cocos/base/Scheduler.h
+    cocos/base/SharedMutex.h
     cocos/base/StringHandle.cpp
     cocos/base/StringHandle.h
     cocos/base/StringPool.h

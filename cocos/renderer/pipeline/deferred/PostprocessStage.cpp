@@ -107,7 +107,7 @@ void PostprocessStage::render(scene::Camera *camera) {
 
     cmdBf->beginRenderPass(rp, fb, renderArea, _clearColors, camera->getClearDepth(), camera->getClearStencil());
     uint const globalOffsets[] = {_pipeline->getPipelineUBO()->getCurrentCameraUBOOffset()};
-    cmdBf->bindDescriptorSet(globalSet, pp->getDescriptorSet(), static_cast<uint>(std::size(globalOffsets)), globalOffsets);
+    cmdBf->bindDescriptorSet(globalSet, pp->getDescriptorSet(), static_cast<uint>(sizeof(globalOffsets)/sizeof(uint)), globalOffsets);
 
     // post proces
     auto *const  sceneData     = static_cast<DeferredPipelineSceneData*>(_pipeline->getPipelineSceneData());

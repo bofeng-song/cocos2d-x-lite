@@ -138,12 +138,12 @@ JointTexturePool::JointTexturePool(gfx::Device *device) {
     _pool              = new TextureBufferPool(device);
     ITextureBufferPoolInfo poolInfo;
     poolInfo.format    = format;
-    poolInfo.roundUpFn = roundUpTextureSize;
+    poolInfo.roundUpFn = roundUpType{roundUpTextureSize};
     _pool->initialize(poolInfo);
     _customPool = new TextureBufferPool(device);
     ITextureBufferPoolInfo customPoolInfo;
     customPoolInfo.format    = format;
-    customPoolInfo.roundUpFn = roundUpTextureSize;
+    customPoolInfo.roundUpFn = roundUpType{roundUpTextureSize};
     _customPool->initialize(customPoolInfo);
 }
 
